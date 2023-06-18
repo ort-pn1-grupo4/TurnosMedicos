@@ -24,6 +24,20 @@
                 <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Sexo" class="control-label"></label>
+                @*<select asp-for="DeporteFavorito" class="form-control"></select>*@
+                <select asp-for="Sexo" class="form-control" asp-items="Html.GetEnumSelectList<Sexo>()">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+
+                <span asp-validation-for="Sexo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Especialidad" class="control-label"></label>
+                <select asp-for="Especialidad" class="form-control"></select>
+                <span asp-validation-for="Especialidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

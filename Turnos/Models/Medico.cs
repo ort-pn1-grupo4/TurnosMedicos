@@ -19,5 +19,8 @@ namespace Turnos.Models
         
         [Required]
         public string Apellido { get; set; }
+
+        public Sexo Sexo{ get; set; }
+        public Especialidad Especialidad {get; set; }
     }
 }

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Turnos.Models
 {
     public class Turno
     {
+        [Key]
+        public int IdTurno { get; set; }
+        [Required]
         public DateTime Fecha { get; set; }
-        public int Id { get; set; }
+        public Medico Medico { get; set; }
+        public Paciente Paciente { get; set;}
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Turnos.Models.Medico>
+﻿@model IEnumerable<Turnos.Models.Paciente>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,6 +18,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Apellido)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sexo)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -31,9 +37,15 @@
                 @Html.DisplayFor(modelItem => item.Apellido)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdMedico">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdMedico">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdMedico">Delete</a>
+                @Html.DisplayFor(modelItem => item.Dni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sexo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPaciente">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPaciente">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPaciente">Delete</a>
             </td>
         </tr>
 }

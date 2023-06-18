@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Turnos.Models
 {
-    public class Especialidad
+    public enum Especialidad
     {
-        public int IdEspecialidad { get; set; }
-        public string Nombre { get; set; }
+        DENTISTA, PEDIATRA, UROLOGO, GENERAL, GINECOLOGO, CARDIOLOGO, OTORRINO, DERMATOLOGO
+
     }
 }

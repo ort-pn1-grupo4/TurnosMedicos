@@ -10,87 +10,87 @@ using Turnos.Models;
 
 namespace Turnos.Controllers
 {
-    public class MedicoController : Controller
+    public class PacientesController : Controller
     {
         private readonly TurnosDbContext _context;
 
-        public MedicoController(TurnosDbContext context)
+        public PacientesController(TurnosDbContext context)
         {
             _context = context;
         }
 
-        // GET: Medico
+        // GET: Pacientes
         public async Task<IActionResult> Index()
         {
-              return _context.Medicos != null ? 
-                          View(await _context.Medicos.ToListAsync()) :
-                          Problem("Entity set 'TurnosDbContext.Medicos'  is null.");
+              return _context.Pacientes != null ? 
+                          View(await _context.Pacientes.ToListAsync()) :
+                          Problem("Entity set 'TurnosDbContext.Pacientes'  is null.");
         }
 
-        // GET: Medico/Details/5
+        // GET: Pacientes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Medicos == null)
+            if (id == null || _context.Pacientes == null)
             {
                 return NotFound();
             }
 
-            var medico = await _context.Medicos
-                .FirstOrDefaultAsync(m => m.IdMedico == id);
-            if (medico == null)
+            var paciente = await _context.Pacientes
+                .FirstOrDefaultAsync(m => m.IdPaciente == id);
+            if (paciente == null)
             {
                 return NotFound();
             }
 
-            return View(medico);
+            return View(paciente);
         }
 
-        // GET: Medico/Create
+        // GET: Pacientes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Medico/Create
+        // POST: Pacientes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdMedico,Nombre,Apellido")] Medico medico)
+        public async Task<IActionResult> Create([Bind("IdPaciente,Nombre,Apellido,Dni,Sexo")] Paciente paciente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(medico);
+                _context.Add(paciente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(medico);
+            return View(paciente);
         }
 
-        // GET: Medico/Edit/5
+        // GET: Pacientes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Medicos == null)
+            if (id == null || _context.Pacientes == null)
             {
                 return NotFound();
             }
 
-            var medico = await _context.Medicos.FindAsync(id);
-            if (medico == null)
+            var paciente = await _context.Pacientes.FindAsync(id);
+            if (paciente == null)
             {
                 return NotFound();
             }
-            return View(medico);
+            return View(paciente);
         }
 
-        // POST: Medico/Edit/5
+        // POST: Pacientes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdMedico,Nombre,Apellido")] Medico medico)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPaciente,Nombre,Apellido,Dni,Sexo")] Paciente paciente)
         {
-            if (id != medico.IdMedico)
+            if (id != paciente.IdPaciente)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace Turnos.Controllers
             {
                 try
                 {
-                    _context.Update(medico);
+                    _context.Update(paciente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MedicoExists(medico.IdMedico))
+                    if (!PacienteExists(paciente.IdPaciente))
                     {
                         return NotFound();
                     }
@@ -115,49 +115,49 @@ namespace Turnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(medico);
+            return View(paciente);
         }
 
-        // GET: Medico/Delete/5
+        // GET: Pacientes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Medicos == null)
+            if (id == null || _context.Pacientes == null)
             {
                 return NotFound();
             }
 
-            var medico = await _context.Medicos
-                .FirstOrDefaultAsync(m => m.IdMedico == id);
-            if (medico == null)
+            var paciente = await _context.Pacientes
+                .FirstOrDefaultAsync(m => m.IdPaciente == id);
+            if (paciente == null)
             {
                 return NotFound();
             }
 
-            return View(medico);
+            return View(paciente);
         }
 
-        // POST: Medico/Delete/5
+        // POST: Pacientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Medicos == null)
+            if (_context.Pacientes == null)
             {
-                return Problem("Entity set 'TurnosDbContext.Medicos'  is null.");
+                return Problem("Entity set 'TurnosDbContext.Pacientes'  is null.");
             }
-            var medico = await _context.Medicos.FindAsync(id);
-            if (medico != null)
+            var paciente = await _context.Pacientes.FindAsync(id);
+            if (paciente != null)
             {
-                _context.Medicos.Remove(medico);
+                _context.Pacientes.Remove(paciente);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MedicoExists(int id)
+        private bool PacienteExists(int id)
         {
-          return (_context.Medicos?.Any(e => e.IdMedico == id)).GetValueOrDefault();
+          return (_context.Pacientes?.Any(e => e.IdPaciente == id)).GetValueOrDefault();
         }
     }
 }

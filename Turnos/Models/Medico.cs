@@ -15,12 +15,20 @@ namespace Turnos.Models
         public int IdMedico { get; set; }
 
         [Required]
-        public string Nombre { get; set; }
+        [MinLength(3)]
+        [MaxLength(30)]
+        [RegularExpression("^([A-Za-z]+ -)$", ErrorMessage = "solo se aceptan letras.")]
+        public string Nombre { get; set; } 
         
         [Required]
+        [MinLength(4)]
+        [MaxLength(30)]
+        [RegularExpression("^([A-Za-z]+ -)$", ErrorMessage = "solo se aceptan letras.")]
         public string Apellido { get; set; }
 
+        [Required]
         public Sexo Sexo{ get; set; }
+        [Required]
         public Especialidad Especialidad {get; set; }
     }
 }

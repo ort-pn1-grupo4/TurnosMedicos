@@ -13,12 +13,19 @@ namespace Turnos.Models
         public int IdPaciente { get; set; }
 
         [Required]
+        [MinLength(3)]
+        [MaxLength(30)]
+        [RegularExpression("^([A-Za-z]+ -)$", ErrorMessage = "solo se aceptan letras.")]
         public string Nombre { get; set; }
 
         [Required]
+        [MinLength(3)]
+        [MaxLength(30)]
+        [RegularExpression("^([A-Za-z]+ -)$", ErrorMessage = "solo se aceptan letras.")]
         public string Apellido { get; set; }
 
-        [Required] 
+        [Required]
+        [MinLength(8)]
         public string Dni { get; set; }
 
         [Required]

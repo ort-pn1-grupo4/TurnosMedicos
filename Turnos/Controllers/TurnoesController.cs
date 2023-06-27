@@ -60,6 +60,14 @@ namespace Turnos.Controllers
         {
             if (ModelState.IsValid)
             {
+                DateTime f = turno.Fecha;
+                Console.WriteLine("Se crea un turno para esta fecha" + turno.Fecha);
+
+                Turno? t = await _context.Turnos.Select(turno => turno).Where(t => t.Fecha == f).FirstOrDefaultAsync();
+                if(t != null)
+                {
+                    return UnprocessableEntity();
+                }
                 _context.Add(turno);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -159,5 +167,6 @@ namespace Turnos.Controllers
         {
           return (_context.Turnos?.Any(e => e.IdTurno == id)).GetValueOrDefault();
         }
+
     }
 }

@@ -17,13 +17,13 @@ namespace Turnos.Models
         [Required]
         [MinLength(3)]
         [MaxLength(30)]
-        [RegularExpression("^([A-Za-z]+ -)$", ErrorMessage = "solo se aceptan letras.")]
+        [RegularExpression("^([A-Za-z]+ -)$", ErrorMessage = "Solo se aceptan letras.")]
         public string Nombre { get; set; } 
         
         [Required]
         [MinLength(4)]
         [MaxLength(30)]
-        [RegularExpression("^([A-Za-z]+ -)$", ErrorMessage = "solo se aceptan letras.")]
+        [RegularExpression("^([A-Za-z]+ -)$", ErrorMessage = "Solo se aceptan letras.")]
         public string Apellido { get; set; }
 
         [Required]

@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#doctors-image{
+    height: 200px;
+    overflow:hidden;
+}
+

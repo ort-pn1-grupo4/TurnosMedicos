@@ -17,8 +17,16 @@ namespace Turnos.Controllers
         public TurnoesController(TurnosDbContext context)
         {
             _context = context;
+            LoadBag();
+
+
         }
 
+        private void LoadBag()
+        {
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "IdMedico", "Nombre");
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "IdPaciente", "NombreCompleto");
+        }
         // GET: Turnoes
         public async Task<IActionResult> Index()
         {

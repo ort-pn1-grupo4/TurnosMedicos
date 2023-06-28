@@ -17,7 +17,7 @@ body {
   margin-bottom: 60px;
 }
 
-#doctors-image, #pacientes-container {
+.header-image {
     height: 200px;
     overflow: hidden;
 }

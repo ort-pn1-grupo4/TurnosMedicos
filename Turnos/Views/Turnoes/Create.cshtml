@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    
 }
 
 <h1>Create</h1>
@@ -36,18 +37,34 @@
                 <span asp-validation-for="Paciente" class="text-danger"></span>
             </div>
 
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="d-flex justify-content-between align-items-end">
+                <div class="form-group mt-4">
+                    <input type="submit" value="Create" class="btn btn-outline-primary" />
+                </div>
+                <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
             </div>
 
         </form>
     </div>
+    <div class="col-md-8">
+        <div class="alert alert-primary" role="alert">
+            <p>
+                Una vez que hayas completado el formulario, haz clic en el botón
+                <strong>"Create"</strong> para programar tu turno. Nos pondremos en contacto contigo para confirmar la cita y brindarte más detalles.
+            </p>
+            <p>
+                Si tienes alguna pregunta o necesitas asistencia, 
+                no dudes en comunicarte con nuestro equipo de soporte al cliente.
+            </p>
+            <p>
+                ¡Gracias por elegir nuestra aplicación de turnos! 
+                Estamos ansiosos por atenderte y brindarte un servicio excepcional.
+            </p>
+        </div>
+    </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

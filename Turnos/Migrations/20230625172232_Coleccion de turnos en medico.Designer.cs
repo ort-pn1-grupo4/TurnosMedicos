@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Turnos.Context;
 
@@ -11,9 +12,10 @@ using Turnos.Context;
 namespace Turnos.Migrations
 {
     [DbContext(typeof(TurnosDbContext))]
-    partial class TurnosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230625172232_Coleccion de turnos en medico")]
+    partial class Colecciondeturnosenmedico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,16 +34,14 @@ namespace Turnos.Migrations
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Especialidad")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Sexo")
                         .HasColumnType("int");
@@ -61,8 +61,7 @@ namespace Turnos.Migrations
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dni")
                         .IsRequired()
@@ -70,8 +69,7 @@ namespace Turnos.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Sexo")
                         .HasColumnType("int");
@@ -92,17 +90,17 @@ namespace Turnos.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MedicoId")
+                    b.Property<int>("MedicoIdMedico")
                         .HasColumnType("int");
 
-                    b.Property<int>("PacienteId")
+                    b.Property<int>("PacienteIdPaciente")
                         .HasColumnType("int");
 
                     b.HasKey("IdTurno");
 
-                    b.HasIndex("MedicoId");
+                    b.HasIndex("MedicoIdMedico");
 
-                    b.HasIndex("PacienteId");
+                    b.HasIndex("PacienteIdPaciente");
 
                     b.ToTable("Turnos");
                 });
@@ -110,20 +108,25 @@ namespace Turnos.Migrations
             modelBuilder.Entity("Turnos.Models.Turno", b =>
                 {
                     b.HasOne("Turnos.Models.Medico", "Medico")
-                        .WithMany()
-                        .HasForeignKey("MedicoId")
+                        .WithMany("Turnos")
+                        .HasForeignKey("MedicoIdMedico")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Turnos.Models.Paciente", "Paciente")
                         .WithMany()
-                        .HasForeignKey("PacienteId")
+                        .HasForeignKey("PacienteIdPaciente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Medico");
 
                     b.Navigation("Paciente");
+                });
+
+            modelBuilder.Entity("Turnos.Models.Medico", b =>
+                {
+                    b.Navigation("Turnos");
                 });
 #pragma warning restore 612, 618
         }

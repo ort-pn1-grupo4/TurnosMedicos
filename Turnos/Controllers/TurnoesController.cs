@@ -22,9 +22,8 @@ namespace Turnos.Controllers
         // GET: Turnoes
         public async Task<IActionResult> Index()
         {
-              return _context.Turnos != null ? 
-                          View(await _context.Turnos.ToListAsync()) :
-                          Problem("Entity set 'TurnosDbContext.Turnos'  is null.");
+            var turnosDbContext = _context.Turnos.Include(t => t.Medico).Include(t => t.Paciente);
+            return View(await turnosDbContext.ToListAsync());
         }
 
         // GET: Turnoes/Details/5
@@ -36,6 +35,8 @@ namespace Turnos.Controllers
             }
 
             var turno = await _context.Turnos
+                .Include(t => t.Medico)
+                .Include(t => t.Paciente)
                 .FirstOrDefaultAsync(m => m.IdTurno == id);
             if (turno == null)
             {
@@ -48,6 +49,8 @@ namespace Turnos.Controllers
         // GET: Turnoes/Create
         public IActionResult Create()
         {
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "IdMedico", "Apellido");
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "IdPaciente", "Apellido");
             return View();
         }
 
@@ -56,22 +59,26 @@ namespace Turnos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTurno,Fecha")] Turno turno)
+        public async Task<IActionResult> Create([Bind("IdTurno,Fecha,MedicoId,PacienteId")] Turno turno)
         {
             if (ModelState.IsValid)
             {
+
                 DateTime f = turno.Fecha;
                 Console.WriteLine("Se crea un turno para esta fecha" + turno.Fecha);
 
                 Turno? t = await _context.Turnos.Select(turno => turno).Where(t => t.Fecha == f).FirstOrDefaultAsync();
-                if(t != null)
+                if (t != null)
                 {
                     return UnprocessableEntity();
                 }
+
                 _context.Add(turno);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "IdMedico", "Apellido", turno.MedicoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "IdPaciente", "Apellido", turno.PacienteId);
             return View(turno);
         }
 
@@ -88,6 +95,8 @@ namespace Turnos.Controllers
             {
                 return NotFound();
             }
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "IdMedico", "Apellido", turno.MedicoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "IdPaciente", "Apellido", turno.PacienteId);
             return View(turno);
         }
 
@@ -96,7 +105,7 @@ namespace Turnos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTurno,Fecha")] Turno turno)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTurno,Fecha,MedicoId,PacienteId")] Turno turno)
         {
             if (id != turno.IdTurno)
             {
@@ -123,6 +132,8 @@ namespace Turnos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "IdMedico", "Apellido", turno.MedicoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "IdPaciente", "Apellido", turno.PacienteId);
             return View(turno);
         }
 
@@ -135,6 +146,8 @@ namespace Turnos.Controllers
             }
 
             var turno = await _context.Turnos
+                .Include(t => t.Medico)
+                .Include(t => t.Paciente)
                 .FirstOrDefaultAsync(m => m.IdTurno == id);
             if (turno == null)
             {
@@ -167,6 +180,5 @@ namespace Turnos.Controllers
         {
           return (_context.Turnos?.Any(e => e.IdTurno == id)).GetValueOrDefault();
         }
-
     }
 }

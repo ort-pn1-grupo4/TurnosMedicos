@@ -17,16 +17,16 @@ namespace Turnos.Controllers
         public TurnoesController(TurnosDbContext context)
         {
             _context = context;
-            LoadBag();
+            //LoadBag();
 
 
         }
 
-        private void LoadBag()
-        {
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "IdMedico", "Nombre");
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "IdPaciente", "NombreCompleto");
-        }
+        //private void LoadBag()
+        //{
+        //    ViewData["MedicoId"] = new SelectList(_context.Medicos, "IdMedico", "Nombre");
+        //    ViewData["PacienteId"] = new SelectList(_context.Pacientes, "IdPaciente", "NombreCompleto");
+        //}
         // GET: Turnoes
         public async Task<IActionResult> Index()
         {
@@ -56,6 +56,9 @@ namespace Turnos.Controllers
         // GET: Turnoes/Create
         public IActionResult Create()
         {
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "IdMedico", "Nombre");
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "IdPaciente", "Nombre");
+        
             return View();
         }
 
@@ -64,7 +67,7 @@ namespace Turnos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTurno,Fecha")] Turno turno)
+        public async Task<IActionResult> Create([Bind("IdTurno, Medico, Paciente, MedicoId, PacienteId, Fecha")] Turno turno)
         {
             if (ModelState.IsValid)
             {
